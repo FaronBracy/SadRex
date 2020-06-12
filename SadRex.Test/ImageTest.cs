@@ -14,9 +14,9 @@ namespace SadRex.Test
       {
          using ( FileStream fs = File.OpenRead( "./Images/2x2.xp" ) )
          {
-            Image image = Image.Load( fs );
-            Assert.AreEqual( 2, image.Height );
-            Assert.AreEqual( 2, image.Width );
+            RexImage rexImage = RexImage.Load( fs );
+            Assert.AreEqual( 2, rexImage.Height );
+            Assert.AreEqual( 2, rexImage.Width );
          }
       }
 
@@ -25,8 +25,8 @@ namespace SadRex.Test
       {
          using ( FileStream fs = File.OpenRead( "./Images/2x2.xp" ) )
          {
-            Image image = Image.Load( fs );
-            ToolGen toolGen = new ToolGen( image );
+            RexImage rexImage = RexImage.Load( fs );
+            ToolGen toolGen = new ToolGen( rexImage );
             string gen = toolGen.GenForUnity();
             File.WriteAllText( "C:\\Github\\SadRex\\SadRex.Test\\Generated.cs", gen );
          }
@@ -35,12 +35,12 @@ namespace SadRex.Test
 
    public class ToolGen
    {
-      private readonly Image _image;
+      private readonly RexImage _rexImage;
       private readonly HashSet<RexCell> _tokens;
 
-      public ToolGen( Image image )
+      public ToolGen( RexImage rexImage )
       {
-         _image = image;
+         _rexImage = rexImage;
          _tokens = new HashSet<RexCell>();
       }
 
@@ -78,7 +78,7 @@ namespace SadRex.Test
 
       private HashSet<RexCell> Tokenize()
       {
-         foreach ( RexCell cell in _image.Layers[0].Cells )
+         foreach ( RexCell cell in _rexImage.Layers[0].Cells )
          {
             _tokens.Add( cell );
          }
