@@ -140,8 +140,8 @@ namespace SadRex
                         {
 
                             var cell = new RexCell(reader.ReadInt32(),                                                  // character
-                                                new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte()),  // foreground
-                                                new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte())); // background
+                                                new RexColor(reader.ReadByte(), reader.ReadByte(), reader.ReadByte()),  // foreground
+                                                new RexColor(reader.ReadByte(), reader.ReadByte(), reader.ReadByte())); // background
 
                             rexLayer[x, y] = cell;
                         }

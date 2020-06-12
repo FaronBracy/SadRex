@@ -13,14 +13,14 @@
       /// <summary>
       /// The foreground color of the cell.
       /// </summary>
-      public Color Foreground;
+      public RexColor Foreground;
 
       /// <summary>
       /// The background color of the cell.
       /// </summary>
-      public Color Background;
+      public RexColor Background;
 
-      public RexCell( int character, Color foreground, Color background )
+      public RexCell( int character, RexColor foreground, RexColor background )
       {
          Character = character;
          Foreground = foreground;
@@ -33,7 +33,7 @@
       /// <returns>True when transparent.</returns>
       public bool IsTransparent()
       {
-         return Background == Color.Transparent;
+         return Background == RexColor.Transparent;
       }
 
       public bool Equals( RexCell other )

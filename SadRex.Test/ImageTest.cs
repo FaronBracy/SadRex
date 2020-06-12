@@ -59,8 +59,8 @@ namespace SadRex.Test
 
          sb.AppendLine( "public virtual string Name => throw new NotImplementedException();" );
          sb.AppendLine( "public virtual int Character => throw new NotImplementedException();" );
-         sb.AppendLine( "public virtual Color Foreground => throw new NotImplementedException();" );
-         sb.AppendLine( "public virtual Color Background => throw new NotImplementedException();" );
+         sb.AppendLine( "public virtual RexColor Foreground => throw new NotImplementedException();" );
+         sb.AppendLine( "public virtual RexColor Background => throw new NotImplementedException();" );
 
          foreach ( RexCell token in tokens )
          {
@@ -68,8 +68,8 @@ namespace SadRex.Test
             sb.AppendLine( "{" );
             sb.AppendLine( $"public override string Name => \"Replace_{token.Character}\";" );
             sb.AppendLine( $"public override int Character => {token.Character};" );
-            sb.AppendLine( $"public override Color Foreground => new Color( {token.Foreground.R}, {token.Foreground.B}, {token.Foreground.G} );" );
-            sb.AppendLine( $"public override Color Background => new Color( {token.Background.R}, {token.Background.B}, {token.Background.G} );" );
+            sb.AppendLine( $"public override RexColor Foreground => new RexColor( {token.Foreground.R}, {token.Foreground.B}, {token.Foreground.G} );" );
+            sb.AppendLine( $"public override RexColor Background => new RexColor( {token.Background.R}, {token.Background.B}, {token.Background.G} );" );
             sb.AppendLine( "}" );
          }
          sb.AppendLine( "}" );
@@ -98,40 +98,40 @@ namespace SadRex.Test
 
       public virtual int Character => throw new NotImplementedException();
 
-      public virtual Color Foreground => throw new NotImplementedException();
+      public virtual RexColor Foreground => throw new NotImplementedException();
 
-      public virtual Color Background => throw new NotImplementedException();
+      public virtual RexColor Background => throw new NotImplementedException();
 
       private class WaterRexTile : RexTile
       {
          public override string Name => "Water";
          public override int Character => 1;
-         public override Color Foreground => new Color( 1, 1, 1 );
-         public override Color Background => new Color( 1, 1, 1 );
+         public override RexColor Foreground => new RexColor( 1, 1, 1 );
+         public override RexColor Background => new RexColor( 1, 1, 1 );
       }
 
       private class TreeRexTile : RexTile
       {
          public override string Name => "Tree";
          public override int Character => 1;
-         public override Color Foreground => new Color( 1, 1, 1 );
-         public override Color Background => new Color( 1, 1, 1 );
+         public override RexColor Foreground => new RexColor( 1, 1, 1 );
+         public override RexColor Background => new RexColor( 1, 1, 1 );
       }
 
       private class WallRexTile : RexTile
       {
          public override string Name => "Wall";
          public override int Character => 1;
-         public override Color Foreground => new Color( 1, 1, 1 );
-         public override Color Background => new Color( 1, 1, 1 );
+         public override RexColor Foreground => new RexColor( 1, 1, 1 );
+         public override RexColor Background => new RexColor( 1, 1, 1 );
       }
 
       private class FloorRexTile : RexTile
       {
          public override string Name => "Floor";
          public override int Character => 1;
-         public override Color Foreground => new Color( 1, 1, 1 );
-         public override Color Background => new Color( 1, 1, 1 );
+         public override RexColor Foreground => new RexColor( 1, 1, 1 );
+         public override RexColor Background => new RexColor( 1, 1, 1 );
       }
    }
 }
