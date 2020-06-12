@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SadRex.Test
 {
    [TestClass]
-   public class ImageTest
+   public class RexImageTest
    {
       [TestMethod]
       public void Load_Valid2x2XpFile_ReturnsCorrectImage()
