@@ -12,7 +12,7 @@ namespace SadRex
     /// </summary>
     public class Image
     {
-        private List<Layer> layers;
+        private List<RexLayer> layers;
 
         /// <summary>
         /// The version of RexPaint that created this image.
@@ -37,7 +37,7 @@ namespace SadRex
         /// <summary>
         /// A read-only collection of layers.
         /// </summary>
-        public System.Collections.ObjectModel.ReadOnlyCollection<Layer> Layers { get { return new System.Collections.ObjectModel.ReadOnlyCollection<Layer>(layers); } }
+        public System.Collections.ObjectModel.ReadOnlyCollection<RexLayer> Layers { get { return new System.Collections.ObjectModel.ReadOnlyCollection<RexLayer>(layers); } }
 
         /// <summary>
         /// Creates a new RexPaint image.
@@ -48,7 +48,7 @@ namespace SadRex
         {
             Width = width;
             Height = height;
-            layers = new List<Layer>();
+            layers = new List<RexLayer>();
             Create();
         }
 
@@ -56,9 +56,9 @@ namespace SadRex
         /// Creates a new layer for the image adding it to the end of the layer stack.
         /// </summary>
         /// <returns>A new layer.</returns>
-        public Layer Create()
+        public RexLayer Create()
         {
-            var layer = new Layer(Width, Height);
+            var layer = new RexLayer(Width, Height);
             layers.Add(layer);
             return layer;
         }
@@ -68,9 +68,9 @@ namespace SadRex
         /// </summary>
         /// <param name="index">The position to create the new layer at.</param>
         /// <returns>A new layer.</returns>
-        public Layer Create(int index)
+        public RexLayer Create(int index)
         {
-            var layer = new Layer(Width, Height);
+            var layer = new RexLayer(Width, Height);
             layers.Insert(index, layer);
             return layer;
         }
@@ -78,29 +78,29 @@ namespace SadRex
         /// <summary>
         /// Adds an existing layer (must be the same width/height) to the image.
         /// </summary>
-        /// <param name="layer">The layer to add.</param>
-        public void Add(Layer layer)
+        /// <param name="rexLayer">The layer to add.</param>
+        public void Add(RexLayer rexLayer)
         {
-            layers.Add(layer);
+            layers.Add(rexLayer);
         }
 
         /// <summary>
         /// Adds an existing layer (must be the same width/height) to the image and inserts it at the specified position (0-based).
         /// </summary>
-        /// <param name="layer">The layer to add.</param>
+        /// <param name="rexLayer">The layer to add.</param>
         /// <param name="index">The position to add the layer.</param>
-        public void Add(Layer layer, int index)
+        public void Add(RexLayer rexLayer, int index)
         {
-            layers.Insert(index, layer);
+            layers.Insert(index, rexLayer);
         }
 
         /// <summary>
         /// Removes the specified layer.
         /// </summary>
-        /// <param name="layer">The layer.</param>
-        public void Remove(Layer layer)
+        /// <param name="rexLayer">The layer.</param>
+        public void Remove(RexLayer rexLayer)
         {
-            layers.Remove(layer);
+            layers.Remove(rexLayer);
         }
 
         /// <summary>
@@ -123,15 +123,15 @@ namespace SadRex
                     int width = reader.ReadInt32();
                     int height = reader.ReadInt32();
 
-                    Layer layer = null;
+                    RexLayer rexLayer = null;
 
                     if (currentLayer == 0)
                     {
                         image = new Image(width, height);
-                        layer = image.layers[0];
+                        rexLayer = image.layers[0];
                     }
                     else
-                        layer = image.Create();
+                        rexLayer = image.Create();
 
                     // Process cells (could probably be streamlined into index processing instead of x,y...
                     for (int x = 0; x < width; x++)
@@ -143,7 +143,7 @@ namespace SadRex
                                                 new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte()),  // foreground
                                                 new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte())); // background
 
-                            layer[x, y] = cell;
+                            rexLayer[x, y] = cell;
                         }
                     }
                 }
