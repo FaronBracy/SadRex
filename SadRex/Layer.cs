@@ -11,7 +11,7 @@ namespace SadRex
     /// </summary>
     public class Layer
     {
-        private Cell[] cells;
+        private RexCell[] cells;
 
         /// <summary>
         /// The width of the layer.
@@ -26,7 +26,7 @@ namespace SadRex
         /// <summary>
         /// Represents all cells of the layer.
         /// </summary>
-        public System.Collections.ObjectModel.ReadOnlyCollection<Cell> Cells { get { return new System.Collections.ObjectModel.ReadOnlyCollection<Cell>(cells); } }
+        public System.Collections.ObjectModel.ReadOnlyCollection<RexCell> Cells { get { return new System.Collections.ObjectModel.ReadOnlyCollection<RexCell>(cells); } }
 
         /// <summary>
         /// Gets a cell by coordinates.
@@ -34,7 +34,7 @@ namespace SadRex
         /// <param name="x">The x (0-based) position of the cell.</param>
         /// <param name="y">The y (0-based) position of the cell.</param>
         /// <returns>The cell.</returns>
-        public Cell this[int x, int y]
+        public RexCell this[int x, int y]
         {
             get { CheckForBounds(x, y); return cells[y * Width + x]; }
             set { CheckForBounds(x, y); cells[y * Width + x] = value; }
@@ -45,7 +45,7 @@ namespace SadRex
         /// </summary>
         /// <param name="index">The index of the cell.</param>
         /// <returns>The cell.</returns>
-        public Cell this[int index]
+        public RexCell this[int index]
         {
             get { CheckForIndexBounds(index); return cells[index]; }
             set { CheckForIndexBounds(index); cells[index] = value; }
@@ -60,7 +60,7 @@ namespace SadRex
         {
             Width = width;
             Height = height;
-            cells = new Cell[width * height];
+            cells = new RexCell[width * height];
         }
 
         private void CheckForIndexBounds(int index)

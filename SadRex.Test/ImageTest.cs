@@ -36,23 +36,23 @@ namespace SadRex.Test
    public class ToolGen
    {
       private readonly Image _image;
-      private readonly HashSet<Cell> _tokens;
+      private readonly HashSet<RexCell> _tokens;
 
       public ToolGen( Image image )
       {
          _image = image;
-         _tokens = new HashSet<Cell>();
+         _tokens = new HashSet<RexCell>();
       }
 
       public string GenForUnity()
       {
-         HashSet<Cell> tokens = Tokenize();
+         HashSet<RexCell> tokens = Tokenize();
          StringBuilder sb = new StringBuilder();
          sb.AppendLine( "using System;" );
          sb.AppendLine( "using SadRex;" );  
          sb.AppendLine( "public class RexTile" );
          sb.AppendLine( "{" );
-         foreach ( Cell token in tokens )
+         foreach ( RexCell token in tokens )
          {
             sb.AppendLine( $"public static readonly RexTile Replace_{token.Character} = new Replace_{token.Character}RexTile();" );
          }
@@ -62,7 +62,7 @@ namespace SadRex.Test
          sb.AppendLine( "public virtual Color Foreground => throw new NotImplementedException();" );
          sb.AppendLine( "public virtual Color Background => throw new NotImplementedException();" );
 
-         foreach ( Cell token in tokens )
+         foreach ( RexCell token in tokens )
          {
             sb.AppendLine( $"private class Replace_{token.Character}RexTile : RexTile" );
             sb.AppendLine( "{" );
@@ -76,9 +76,9 @@ namespace SadRex.Test
          return sb.ToString();
       }
 
-      private HashSet<Cell> Tokenize()
+      private HashSet<RexCell> Tokenize()
       {
-         foreach ( Cell cell in _image.Layers[0].Cells )
+         foreach ( RexCell cell in _image.Layers[0].Cells )
          {
             _tokens.Add( cell );
          }

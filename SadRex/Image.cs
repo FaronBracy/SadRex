@@ -139,7 +139,7 @@ namespace SadRex
                         for (int y = 0; y < height; y++)
                         {
 
-                            var cell = new Cell(reader.ReadInt32(),                                                  // character
+                            var cell = new RexCell(reader.ReadInt32(),                                                  // character
                                                 new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte()),  // foreground
                                                 new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte())); // background
 
