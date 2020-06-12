@@ -41,5 +41,26 @@ namespace SadRex
         {
             return Background == Color.Transparent;
         }
+
+        public bool Equals( Cell other )
+        {
+           return Character == other.Character && Foreground.Equals( other.Foreground ) && Background.Equals( other.Background );
+        }
+
+        public override bool Equals( object obj )
+        {
+           return obj is Cell other && Equals( other );
+        }
+
+        public override int GetHashCode()
+        {
+           unchecked
+           {
+              var hashCode = Character;
+              hashCode = ( hashCode * 397 ) ^ Foreground.GetHashCode();
+              hashCode = ( hashCode * 397 ) ^ Background.GetHashCode();
+              return hashCode;
+           }
+        }
     }
 }
