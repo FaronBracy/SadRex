@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -84,54 +83,6 @@ namespace SadRex.Test
          }
 
          return _tokens;
-      }
-   }
-
-   public class RexTile
-   {
-      public static readonly RexTile Water = new WaterRexTile();
-      public static readonly RexTile Tree = new TreeRexTile();
-      public static readonly RexTile Wall = new WallRexTile();
-      public static readonly RexTile Floor = new FloorRexTile();
-
-      public virtual string Name => throw new NotImplementedException();
-
-      public virtual int Character => throw new NotImplementedException();
-
-      public virtual RexColor Foreground => throw new NotImplementedException();
-
-      public virtual RexColor Background => throw new NotImplementedException();
-
-      private class WaterRexTile : RexTile
-      {
-         public override string Name => "Water";
-         public override int Character => 1;
-         public override RexColor Foreground => new RexColor( 1, 1, 1 );
-         public override RexColor Background => new RexColor( 1, 1, 1 );
-      }
-
-      private class TreeRexTile : RexTile
-      {
-         public override string Name => "Tree";
-         public override int Character => 1;
-         public override RexColor Foreground => new RexColor( 1, 1, 1 );
-         public override RexColor Background => new RexColor( 1, 1, 1 );
-      }
-
-      private class WallRexTile : RexTile
-      {
-         public override string Name => "Wall";
-         public override int Character => 1;
-         public override RexColor Foreground => new RexColor( 1, 1, 1 );
-         public override RexColor Background => new RexColor( 1, 1, 1 );
-      }
-
-      private class FloorRexTile : RexTile
-      {
-         public override string Name => "Floor";
-         public override int Character => 1;
-         public override RexColor Foreground => new RexColor( 1, 1, 1 );
-         public override RexColor Background => new RexColor( 1, 1, 1 );
       }
    }
 }
