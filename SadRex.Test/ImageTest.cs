@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SadRex.Test
@@ -15,6 +18,120 @@ namespace SadRex.Test
             Assert.AreEqual( 2, image.Height );
             Assert.AreEqual( 2, image.Width );
          }
+      }
+
+      [TestMethod]
+      public void ToolGen_Valid2x2XpFile_ReturnsCorrectImage()
+      {
+         using ( FileStream fs = File.OpenRead( "./Images/2x2.xp" ) )
+         {
+            Image image = Image.Load( fs );
+            ToolGen toolGen = new ToolGen( image );
+            string gen = toolGen.GenForUnity();
+            File.WriteAllText( "C:\\Github\\SadRex\\SadRex.Test\\Generated.cs", gen );
+         }
+      }
+   }
+
+   public class ToolGen
+   {
+      private readonly Image _image;
+      private readonly HashSet<Cell> _tokens;
+
+      public ToolGen( Image image )
+      {
+         _image = image;
+         _tokens = new HashSet<Cell>();
+      }
+
+      public string GenForUnity()
+      {
+         HashSet<Cell> tokens = Tokenize();
+         StringBuilder sb = new StringBuilder();
+         sb.AppendLine( "using System;" );
+         sb.AppendLine( "using SadRex;" );  
+         sb.AppendLine( "public class RexTile" );
+         sb.AppendLine( "{" );
+         foreach ( Cell token in tokens )
+         {
+            sb.AppendLine( $"public static readonly RexTile Replace_{token.Character} = new Replace_{token.Character}RexTile();" );
+         }
+
+         sb.AppendLine( "public virtual string Name => throw new NotImplementedException();" );
+         sb.AppendLine( "public virtual int Character => throw new NotImplementedException();" );
+         sb.AppendLine( "public virtual Color Foreground => throw new NotImplementedException();" );
+         sb.AppendLine( "public virtual Color Background => throw new NotImplementedException();" );
+
+         foreach ( Cell token in tokens )
+         {
+            sb.AppendLine( $"private class Replace_{token.Character}RexTile : RexTile" );
+            sb.AppendLine( "{" );
+            sb.AppendLine( $"public override string Name => \"Replace_{token.Character}\";" );
+            sb.AppendLine( $"public override int Character => {token.Character};" );
+            sb.AppendLine( $"public override Color Foreground => new Color( {token.Foreground.R}, {token.Foreground.B}, {token.Foreground.G} );" );
+            sb.AppendLine( $"public override Color Background => new Color( {token.Background.R}, {token.Background.B}, {token.Background.G} );" );
+            sb.AppendLine( "}" );
+         }
+         sb.AppendLine( "}" );
+         return sb.ToString();
+      }
+
+      private HashSet<Cell> Tokenize()
+      {
+         foreach ( Cell cell in _image.Layers[0].Cells )
+         {
+            _tokens.Add( cell );
+         }
+
+         return _tokens;
+      }
+   }
+
+   public class RexTile
+   {
+      public static readonly RexTile Water = new WaterRexTile();
+      public static readonly RexTile Tree = new TreeRexTile();
+      public static readonly RexTile Wall = new WallRexTile();
+      public static readonly RexTile Floor = new FloorRexTile();
+
+      public virtual string Name => throw new NotImplementedException();
+
+      public virtual int Character => throw new NotImplementedException();
+
+      public virtual Color Foreground => throw new NotImplementedException();
+
+      public virtual Color Background => throw new NotImplementedException();
+
+      private class WaterRexTile : RexTile
+      {
+         public override string Name => "Water";
+         public override int Character => 1;
+         public override Color Foreground => new Color( 1, 1, 1 );
+         public override Color Background => new Color( 1, 1, 1 );
+      }
+
+      private class TreeRexTile : RexTile
+      {
+         public override string Name => "Tree";
+         public override int Character => 1;
+         public override Color Foreground => new Color( 1, 1, 1 );
+         public override Color Background => new Color( 1, 1, 1 );
+      }
+
+      private class WallRexTile : RexTile
+      {
+         public override string Name => "Wall";
+         public override int Character => 1;
+         public override Color Foreground => new Color( 1, 1, 1 );
+         public override Color Background => new Color( 1, 1, 1 );
+      }
+
+      private class FloorRexTile : RexTile
+      {
+         public override string Name => "Floor";
+         public override int Character => 1;
+         public override Color Foreground => new Color( 1, 1, 1 );
+         public override Color Background => new Color( 1, 1, 1 );
       }
    }
 }
