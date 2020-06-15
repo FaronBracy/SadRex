@@ -75,12 +75,14 @@ namespace SadRex.Test
          for ( int i = 0; i < tokens.UniqueCells.Count; i++ )
          {
             RexCell tokenCell = tokens.UniqueCells[i];
+            int foregroundIndex = tokens.UniqueColors.IndexOf( new RexColor( tokenCell.Foreground.R, tokenCell.Foreground.G, tokenCell.Foreground.B ) );
+            int backgroundIndex = tokens.UniqueColors.IndexOf( new RexColor( tokenCell.Background.R, tokenCell.Background.G, tokenCell.Background.B ) );
             sb.AppendLine( $"private class Replace_{i}RexTile : RexTile" );
             sb.AppendLine( "{" );
             sb.AppendLine( $"public override string Name => \"Replace_{i}\";" );
             sb.AppendLine( $"public override int Character => {tokenCell.Character};" );
-            sb.AppendLine( $"public override RexColor Foreground => new RexColor( {tokenCell.Foreground.R}, {tokenCell.Foreground.G}, {tokenCell.Foreground.B} );" );
-            sb.AppendLine( $"public override RexColor Background => new RexColor( {tokenCell.Background.R}, {tokenCell.Background.G}, {tokenCell.Background.B} );" );
+            sb.AppendLine( $"public override RexColor Foreground => Palette.Replace_{foregroundIndex}_Color;" );
+            sb.AppendLine( $"public override RexColor Background => Palette.Replace_{backgroundIndex}_Color;" );
             sb.AppendLine( "}" );
          }
          sb.AppendLine( "}" );

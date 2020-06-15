@@ -26,29 +26,29 @@ namespace Rex.AutoGen
       {
          public override string Name => "Replace_0";
          public override int Character => 247;
-         public override RexColor Foreground => new RexColor( 2, 74, 202 );
-         public override RexColor Background => new RexColor( 0, 23, 125 );
+         public override RexColor Foreground => Palette.Replace_1_Color;
+         public override RexColor Background => Palette.Replace_0_Color;
       }
       private class Replace_1RexTile : RexTile
       {
          public override string Name => "Replace_1";
          public override int Character => 5;
-         public override RexColor Foreground => new RexColor( 106, 180, 23 );
-         public override RexColor Background => new RexColor( 0, 0, 0 );
+         public override RexColor Foreground => Palette.Replace_3_Color;
+         public override RexColor Background => Palette.Replace_2_Color;
       }
       private class Replace_2RexTile : RexTile
       {
          public override string Name => "Replace_2";
          public override int Character => 35;
-         public override RexColor Foreground => new RexColor( 123, 123, 123 );
-         public override RexColor Background => new RexColor( 52, 52, 52 );
+         public override RexColor Foreground => Palette.Replace_5_Color;
+         public override RexColor Background => Palette.Replace_4_Color;
       }
       private class Replace_3RexTile : RexTile
       {
          public override string Name => "Replace_3";
          public override int Character => 249;
-         public override RexColor Foreground => new RexColor( 168, 168, 168 );
-         public override RexColor Background => new RexColor( 0, 0, 0 );
+         public override RexColor Foreground => Palette.Replace_6_Color;
+         public override RexColor Background => Palette.Replace_2_Color;
       }
    }
 }
