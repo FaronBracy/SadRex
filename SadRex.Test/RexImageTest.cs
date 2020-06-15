@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -35,25 +36,35 @@ namespace SadRex.Test
    public class ToolGen
    {
       private readonly RexImage _rexImage;
-      private readonly HashSet<RexCell> _tokens;
 
       public ToolGen( RexImage rexImage )
       {
          _rexImage = rexImage;
-         _tokens = new HashSet<RexCell>();
       }
 
       public string GenForUnity()
       {
-         HashSet<RexCell> tokens = Tokenize();
+         RexTokens tokens = Tokenize();
          StringBuilder sb = new StringBuilder();
          sb.AppendLine( "using System;" );
-         sb.AppendLine( "using SadRex;" );  
+         sb.AppendLine( "using SadRex;" );
+         sb.AppendLine( "namespace Rex.AutoGen" );
+         sb.AppendLine( "{" );
+
+         sb.AppendLine( "public static class Palette" );
+         sb.AppendLine( "{" );
+         for ( int i = 0; i < tokens.UniqueColors.Count; i++ )
+         {
+            RexColor tokenColor = tokens.UniqueColors[i];
+            sb.AppendLine( $"public static RexColor Replace_{i}_Color = new RexColor( {tokenColor.R}, {tokenColor.G}, {tokenColor.B} );" );
+         }
+         sb.AppendLine( "}" );
+
          sb.AppendLine( "public class RexTile" );
          sb.AppendLine( "{" );
-         foreach ( RexCell token in tokens )
+         for ( int i = 0; i < tokens.UniqueCells.Count; i++ )
          {
-            sb.AppendLine( $"public static readonly RexTile Replace_{token.Character} = new Replace_{token.Character}RexTile();" );
+            sb.AppendLine( $"public static readonly RexTile Replace_{i} = new Replace_{i}RexTile();" );
          }
 
          sb.AppendLine( "public virtual string Name => throw new NotImplementedException();" );
@@ -61,28 +72,70 @@ namespace SadRex.Test
          sb.AppendLine( "public virtual RexColor Foreground => throw new NotImplementedException();" );
          sb.AppendLine( "public virtual RexColor Background => throw new NotImplementedException();" );
 
-         foreach ( RexCell token in tokens )
+         for ( int i = 0; i < tokens.UniqueCells.Count; i++ )
          {
-            sb.AppendLine( $"private class Replace_{token.Character}RexTile : RexTile" );
+            RexCell tokenCell = tokens.UniqueCells[i];
+            sb.AppendLine( $"private class Replace_{i}RexTile : RexTile" );
             sb.AppendLine( "{" );
-            sb.AppendLine( $"public override string Name => \"Replace_{token.Character}\";" );
-            sb.AppendLine( $"public override int Character => {token.Character};" );
-            sb.AppendLine( $"public override RexColor Foreground => new RexColor( {token.Foreground.R}, {token.Foreground.B}, {token.Foreground.G} );" );
-            sb.AppendLine( $"public override RexColor Background => new RexColor( {token.Background.R}, {token.Background.B}, {token.Background.G} );" );
+            sb.AppendLine( $"public override string Name => \"Replace_{i}\";" );
+            sb.AppendLine( $"public override int Character => {tokenCell.Character};" );
+            sb.AppendLine( $"public override RexColor Foreground => new RexColor( {tokenCell.Foreground.R}, {tokenCell.Foreground.G}, {tokenCell.Foreground.B} );" );
+            sb.AppendLine( $"public override RexColor Background => new RexColor( {tokenCell.Background.R}, {tokenCell.Background.G}, {tokenCell.Background.B} );" );
             sb.AppendLine( "}" );
          }
+         sb.AppendLine( "}" );
          sb.AppendLine( "}" );
          return sb.ToString();
       }
 
-      private HashSet<RexCell> Tokenize()
+      private RexTokens Tokenize()
       {
+         RexTokens tokens = new RexTokens();
+         HashSet<RexCell> uniqueCells = new HashSet<RexCell>();
+         HashSet<RexColor> uniqueColors = new HashSet<RexColor>();
+         HashSet<int> uniqueCharacterCodes = new HashSet<int>();
+
          foreach ( RexCell cell in _rexImage.Layers[0].Cells )
          {
-            _tokens.Add( cell );
+            uniqueCells.Add( cell );
+            uniqueColors.Add( cell.Background );
+            uniqueColors.Add( cell.Foreground );
+            uniqueCharacterCodes.Add( cell.Character );
          }
 
-         return _tokens;
+         tokens.UniqueCells = uniqueCells.ToList();
+         tokens.UniqueColors = uniqueColors.ToList();
+         tokens.UniqueCharacterCodes = uniqueCharacterCodes.ToList();
+
+         return tokens;
+      }
+   }
+
+   public class RexTokens
+   {
+      public RexTokens()
+      {
+         UniqueCells = new List<RexCell>();
+         UniqueColors = new List<RexColor>();
+         UniqueCharacterCodes = new List<int>();
+      }
+
+      public List<RexCell> UniqueCells
+      {
+         get;
+         set;
+      }
+
+      public List<RexColor> UniqueColors
+      {
+         get;
+         set;
+      }
+
+      public List<int> UniqueCharacterCodes
+      {
+         get;
+         set;
       }
    }
 }

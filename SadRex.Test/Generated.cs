@@ -1,41 +1,54 @@
 using System;
 using SadRex;
-public class RexTile
+namespace Rex.AutoGen
 {
-   public static readonly RexTile Replace_247 = new Replace_247RexTile();
-   public static readonly RexTile Replace_5 = new Replace_5RexTile();
-   public static readonly RexTile Replace_35 = new Replace_35RexTile();
-   public static readonly RexTile Replace_249 = new Replace_249RexTile();
-   public virtual string Name => throw new NotImplementedException();
-   public virtual int Character => throw new NotImplementedException();
-   public virtual RexColor Foreground => throw new NotImplementedException();
-   public virtual RexColor Background => throw new NotImplementedException();
-   private class Replace_247RexTile : RexTile
+   public static class Palette
    {
-      public override string Name => "Replace_247";
-      public override int Character => 247;
-      public override RexColor Foreground => new RexColor( 2, 202, 74 );
-      public override RexColor Background => new RexColor( 0, 125, 23 );
+      public static RexColor Replace_0_Color = new RexColor( 0, 23, 125 );
+      public static RexColor Replace_1_Color = new RexColor( 2, 74, 202 );
+      public static RexColor Replace_2_Color = new RexColor( 0, 0, 0 );
+      public static RexColor Replace_3_Color = new RexColor( 106, 180, 23 );
+      public static RexColor Replace_4_Color = new RexColor( 52, 52, 52 );
+      public static RexColor Replace_5_Color = new RexColor( 123, 123, 123 );
+      public static RexColor Replace_6_Color = new RexColor( 168, 168, 168 );
    }
-   private class Replace_5RexTile : RexTile
+   public class RexTile
    {
-      public override string Name => "Replace_5";
-      public override int Character => 5;
-      public override RexColor Foreground => new RexColor( 106, 23, 180 );
-      public override RexColor Background => new RexColor( 0, 0, 0 );
-   }
-   private class Replace_35RexTile : RexTile
-   {
-      public override string Name => "Replace_35";
-      public override int Character => 35;
-      public override RexColor Foreground => new RexColor( 123, 123, 123 );
-      public override RexColor Background => new RexColor( 52, 52, 52 );
-   }
-   private class Replace_249RexTile : RexTile
-   {
-      public override string Name => "Replace_249";
-      public override int Character => 249;
-      public override RexColor Foreground => new RexColor( 168, 168, 168 );
-      public override RexColor Background => new RexColor( 0, 0, 0 );
+      public static readonly RexTile Replace_0 = new Replace_0RexTile();
+      public static readonly RexTile Replace_1 = new Replace_1RexTile();
+      public static readonly RexTile Replace_2 = new Replace_2RexTile();
+      public static readonly RexTile Replace_3 = new Replace_3RexTile();
+      public virtual string Name => throw new NotImplementedException();
+      public virtual int Character => throw new NotImplementedException();
+      public virtual RexColor Foreground => throw new NotImplementedException();
+      public virtual RexColor Background => throw new NotImplementedException();
+      private class Replace_0RexTile : RexTile
+      {
+         public override string Name => "Replace_0";
+         public override int Character => 247;
+         public override RexColor Foreground => new RexColor( 2, 74, 202 );
+         public override RexColor Background => new RexColor( 0, 23, 125 );
+      }
+      private class Replace_1RexTile : RexTile
+      {
+         public override string Name => "Replace_1";
+         public override int Character => 5;
+         public override RexColor Foreground => new RexColor( 106, 180, 23 );
+         public override RexColor Background => new RexColor( 0, 0, 0 );
+      }
+      private class Replace_2RexTile : RexTile
+      {
+         public override string Name => "Replace_2";
+         public override int Character => 35;
+         public override RexColor Foreground => new RexColor( 123, 123, 123 );
+         public override RexColor Background => new RexColor( 52, 52, 52 );
+      }
+      private class Replace_3RexTile : RexTile
+      {
+         public override string Name => "Replace_3";
+         public override int Character => 249;
+         public override RexColor Foreground => new RexColor( 168, 168, 168 );
+         public override RexColor Background => new RexColor( 0, 0, 0 );
+      }
    }
 }
